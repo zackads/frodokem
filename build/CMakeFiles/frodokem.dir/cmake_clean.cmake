@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/frodokem.dir/main.c.o.d"
   "CMakeFiles/frodokem.dir/matrix_encoding.c.o"
   "CMakeFiles/frodokem.dir/matrix_encoding.c.o.d"
+  "CMakeFiles/frodokem.dir/matrix_packing.c.o"
+  "CMakeFiles/frodokem.dir/matrix_packing.c.o.d"
   "frodokem"
   "frodokem.pdb"
 )

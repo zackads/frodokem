@@ -53,4 +53,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/frodokem.dir/DependInfo.cmake"
   "CMakeFiles/test_matrix_encoding.dir/DependInfo.cmake"
+  "CMakeFiles/test_matrix_packing.dir/DependInfo.cmake"
   )

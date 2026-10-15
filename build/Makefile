@@ -159,6 +159,19 @@ test_matrix_encoding/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_matrix_encoding.dir/build.make CMakeFiles/test_matrix_encoding.dir/build
 .PHONY : test_matrix_encoding/fast
 
+#=============================================================================
+# Target rules for targets named test_matrix_packing
+
+# Build rule for target.
+test_matrix_packing: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_matrix_packing
+.PHONY : test_matrix_packing
+
+# fast build rule for target.
+test_matrix_packing/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_matrix_packing.dir/build.make CMakeFiles/test_matrix_packing.dir/build
+.PHONY : test_matrix_packing/fast
+
 main.o: main.c.o
 .PHONY : main.o
 
@@ -210,6 +223,33 @@ matrix_encoding.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_matrix_encoding.dir/build.make CMakeFiles/test_matrix_encoding.dir/matrix_encoding.c.s
 .PHONY : matrix_encoding.c.s
 
+matrix_packing.o: matrix_packing.c.o
+.PHONY : matrix_packing.o
+
+# target to build an object file
+matrix_packing.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/frodokem.dir/build.make CMakeFiles/frodokem.dir/matrix_packing.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_matrix_packing.dir/build.make CMakeFiles/test_matrix_packing.dir/matrix_packing.c.o
+.PHONY : matrix_packing.c.o
+
+matrix_packing.i: matrix_packing.c.i
+.PHONY : matrix_packing.i
+
+# target to preprocess a source file
+matrix_packing.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/frodokem.dir/build.make CMakeFiles/frodokem.dir/matrix_packing.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_matrix_packing.dir/build.make CMakeFiles/test_matrix_packing.dir/matrix_packing.c.i
+.PHONY : matrix_packing.c.i
+
+matrix_packing.s: matrix_packing.c.s
+.PHONY : matrix_packing.s
+
+# target to generate assembly for a file
+matrix_packing.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/frodokem.dir/build.make CMakeFiles/frodokem.dir/matrix_packing.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_matrix_packing.dir/build.make CMakeFiles/test_matrix_packing.dir/matrix_packing.c.s
+.PHONY : matrix_packing.c.s
+
 tests/test_matrix_encoding.o: tests/test_matrix_encoding.c.o
 .PHONY : tests/test_matrix_encoding.o
 
@@ -234,6 +274,30 @@ tests/test_matrix_encoding.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_matrix_encoding.dir/build.make CMakeFiles/test_matrix_encoding.dir/tests/test_matrix_encoding.c.s
 .PHONY : tests/test_matrix_encoding.c.s
 
+tests/test_matrix_packing.o: tests/test_matrix_packing.c.o
+.PHONY : tests/test_matrix_packing.o
+
+# target to build an object file
+tests/test_matrix_packing.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_matrix_packing.dir/build.make CMakeFiles/test_matrix_packing.dir/tests/test_matrix_packing.c.o
+.PHONY : tests/test_matrix_packing.c.o
+
+tests/test_matrix_packing.i: tests/test_matrix_packing.c.i
+.PHONY : tests/test_matrix_packing.i
+
+# target to preprocess a source file
+tests/test_matrix_packing.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_matrix_packing.dir/build.make CMakeFiles/test_matrix_packing.dir/tests/test_matrix_packing.c.i
+.PHONY : tests/test_matrix_packing.c.i
+
+tests/test_matrix_packing.s: tests/test_matrix_packing.c.s
+.PHONY : tests/test_matrix_packing.s
+
+# target to generate assembly for a file
+tests/test_matrix_packing.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_matrix_packing.dir/build.make CMakeFiles/test_matrix_packing.dir/tests/test_matrix_packing.c.s
+.PHONY : tests/test_matrix_packing.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -246,15 +310,22 @@ help:
 	@echo "... test"
 	@echo "... frodokem"
 	@echo "... test_matrix_encoding"
+	@echo "... test_matrix_packing"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... matrix_encoding.o"
 	@echo "... matrix_encoding.i"
 	@echo "... matrix_encoding.s"
+	@echo "... matrix_packing.o"
+	@echo "... matrix_packing.i"
+	@echo "... matrix_packing.s"
 	@echo "... tests/test_matrix_encoding.o"
 	@echo "... tests/test_matrix_encoding.i"
 	@echo "... tests/test_matrix_encoding.s"
+	@echo "... tests/test_matrix_packing.o"
+	@echo "... tests/test_matrix_packing.i"
+	@echo "... tests/test_matrix_packing.s"
 .PHONY : help
 
 

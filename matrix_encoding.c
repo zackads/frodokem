@@ -9,7 +9,7 @@
 /**
  * Encode a bit string @param kk of length ell as an mbar-by-nbar matrix
  * with entries in Z_q by applying ec(k) := k·q/2^B to B-bit substrings
- * suquentially and filling the matrix row by row entry-wise.
+ * sequentially and filling the matrix row by row entry-wise.
  *
  * Each B-bit substring of @param kk is interpreted as an integer
  * 0 <= k < 2^B and then encoded with ec(k), which means that B-bit values

@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/zack/src/frodokem/main.c" "CMakeFiles/frodokem.dir/main.c.o" "gcc" "CMakeFiles/frodokem.dir/main.c.o.d"
   "/Users/zack/src/frodokem/matrix_encoding.c" "CMakeFiles/frodokem.dir/matrix_encoding.c.o" "gcc" "CMakeFiles/frodokem.dir/matrix_encoding.c.o.d"
+  "/Users/zack/src/frodokem/matrix_packing.c" "CMakeFiles/frodokem.dir/matrix_packing.c.o" "gcc" "CMakeFiles/frodokem.dir/matrix_packing.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

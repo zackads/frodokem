@@ -1,0 +1,1 @@
+/usr/bin/cc -g -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names -fsanitize=undefined CMakeFiles/test_matrix_packing.dir/tests/test_matrix_packing.c.o CMakeFiles/test_matrix_packing.dir/matrix_packing.c.o -o test_matrix_packing  /opt/homebrew/Cellar/criterion/2.5.0_1/lib/libcriterion.dylib
