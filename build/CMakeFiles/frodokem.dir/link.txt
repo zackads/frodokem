@@ -1,0 +1,1 @@
+/usr/bin/cc -g -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/frodokem.dir/main.c.o CMakeFiles/frodokem.dir/matrix_encoding.c.o -o frodokem

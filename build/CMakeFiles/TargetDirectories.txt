@@ -1,0 +1,5 @@
+/Users/zack/src/frodokem/build/CMakeFiles/frodokem.dir
+/Users/zack/src/frodokem/build/CMakeFiles/test_matrix_encoding.dir
+/Users/zack/src/frodokem/build/CMakeFiles/test.dir
+/Users/zack/src/frodokem/build/CMakeFiles/edit_cache.dir
+/Users/zack/src/frodokem/build/CMakeFiles/rebuild_cache.dir
