@@ -5,7 +5,9 @@ set(CMAKE_C_STANDARD 23)
 
 add_executable(frodokem main.c
         matrix_encoding.c
-        matrix_packing.c)
+        matrix_packing.c
+        params.h
+)
 
 # Tests (Criterion: brew install criterion)
 find_package(PkgConfig REQUIRED)
