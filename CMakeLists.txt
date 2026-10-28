@@ -9,6 +9,8 @@ add_executable(frodokem main.c
         sampling.c
         sampling.h
         fips202.c
+        matrix_generation.c
+        matrix_generation.h
         params.h
 )
 

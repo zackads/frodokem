@@ -11,5 +11,7 @@ constexpr int mbar = 4;   // Integer matrix dimension.
 constexpr int nbar = 4;   // Integer matrix dimension.
 constexpr int B = 10;     // B <= D, the number of bits encoded in each matrix entry.
 constexpr int ell = B * mbar * nbar; // The length of bit strings that are encoded as mbar-by-nbar matrices.
+constexpr size_t len_seed_A = 16;
+constexpr size_t len_seed_SE = 16;
 
 #endif //FRODOKEM_PARAS_H
