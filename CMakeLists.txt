@@ -14,6 +14,10 @@ add_executable(frodokem main.c
         frodo_pke.c
         frodo_pke.h
         params.h
+        utils.c
+        utils.h
+        linalg.c
+        linalg.h
 )
 
 # Tests (Criterion: brew install criterion)
@@ -36,3 +40,15 @@ target_link_libraries(test_matrix_packing PRIVATE PkgConfig::CRITERION)
 target_compile_options(test_matrix_packing PRIVATE -fsanitize=undefined)
 target_link_options(test_matrix_packing PRIVATE -fsanitize=undefined)
 add_test(NAME matrix_packing COMMAND test_matrix_packing --timeout 10)
+
+add_executable(test_frodo_pke tests/test_frodo_pke.c
+        frodo_pke.c
+        matrix_generation.c
+        sampling.c
+        fips202.c
+        linalg.c
+        utils.c)
+target_link_libraries(test_frodo_pke PRIVATE PkgConfig::CRITERION)
+target_compile_options(test_frodo_pke PRIVATE -fsanitize=undefined)
+target_link_options(test_frodo_pke PRIVATE -fsanitize=undefined)
+add_test(NAME frodo_pke COMMAND test_frodo_pke --timeout 60)

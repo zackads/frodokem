@@ -6,7 +6,7 @@
 
 // Entries are written as D-bit big-endian strings, row by row.
 Test(pack, single_entry_is_big_endian) {
-  const int values[] = {0, 1, 2, 0x8000, 0xA5C3, (1 << D) - 1};
+  const int values[] = {0, 1, 2, 1 << (D - 1), 0xA5C3 & ((1 << D) - 1), (1 << D) - 1};
   for (size_t v = 0; v < sizeof values / sizeof values[0]; v++) {
     int C[1][1] = {{values[v]}}, bb[D];
     for (int p = 0; p < D; p++) bb[p] = -1;
@@ -21,7 +21,8 @@ Test(pack, single_entry_is_big_endian) {
 
 Test(pack, entries_are_concatenated_row_by_row) {
   enum { R = 2, S = 3 };
-  int C[R][S] = {{0x0001, 0x8000, 0x00FF}, {0xFF00, 0x1234, 0xFFFF}}, bb[D * R * S];
+  const int mask = (1 << D) - 1; // Keep every entry a valid D-bit value
+  int C[R][S] = {{0x0001, 1 << (D - 1), 0x00FF}, {0xFF00 & mask, 0x1234, mask}}, bb[D * R * S];
   pack(R, S, C, bb);
   for (int i = 0; i < R; i++)
     for (int j = 0; j < S; j++)
@@ -47,7 +48,7 @@ Test(pack, single_bit_lands_in_correct_position) {
 // --- unpack: known values ---------------------------------------------------
 
 Test(unpack, single_entry_is_big_endian) {
-  const int values[] = {0, 1, 2, 0x8000, 0xA5C3, (1 << D) - 1};
+  const int values[] = {0, 1, 2, 1 << (D - 1), 0xA5C3 & ((1 << D) - 1), (1 << D) - 1};
   for (size_t v = 0; v < sizeof values / sizeof values[0]; v++) {
     int bb[D], C[1][1] = {{0}};
     for (int l = 0; l < D; l++) bb[l] = (values[v] >> (D - 1 - l)) & 1;

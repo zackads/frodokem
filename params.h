@@ -2,16 +2,23 @@
 #define FRODOKEM_PARAS_H
 #include <stddef.h>
 
-constexpr int len_chi = 12;
-constexpr int s = 42;
-constexpr int D = 16;
-constexpr int q = 1 << D; // A power-of-two integer modulus with exponent D <= 16.
-constexpr int n = 4;      // Integer matrix dimension, n ≡ 0 (mod 8).
-constexpr int mbar = 4;   // Integer matrix dimension.
-constexpr int nbar = 4;   // Integer matrix dimension.
-constexpr int B = 10;     // B <= D, the number of bits encoded in each matrix entry.
+// Params set for Frodo-640
+
+constexpr int len_chi = 16;
+constexpr int s = 12;    // The support of chi is S_chi = {-s, ..., s}.
+constexpr int D = 15;
+constexpr int q = 32768;  // A power-of-two integer modulus with exponent D <= 16.
+constexpr int n = 640;    // Integer matrix dimension, n ≡ 0 (mod 8).
+constexpr int mbar = 8;   // Integer matrix dimension.
+constexpr int nbar = 8;   // Integer matrix dimension, the number of samples.
+constexpr int B = 2;      // B <= D, the number of bits encoded in each matrix entry.
 constexpr int ell = B * mbar * nbar; // The length of bit strings that are encoded as mbar-by-nbar matrices.
 constexpr size_t len_seed_A = 128;
 constexpr size_t len_seed_SE = 128;
+
+// The distribution table T_chi = (T_chi(0), ..., T_chi(s)) for chi_Frodo-640, derived from Table 3's probabilities
+// (in multiples of 2^-16) chi(0..12) = 9288, 8720, 7216, 5264, 3384, 1918, 958, 422, 164, 56, 17, 4, 1 via
+// T_chi(0) = 2^(len_chi - 1) * chi(0) - 1 and T_chi(z) = T_chi(0) + 2^len_chi * sum_{i=1}^{z} chi(i).
+static const int T_chi[s + 1] = { 4643, 13363, 20579, 25843, 29227, 31145, 32103, 32525, 32689, 32745, 32762, 32766, 32767 };
 
 #endif //FRODOKEM_PARAS_H

@@ -17,10 +17,10 @@
  * @param T_chi
  * @return
  */
-int sample(const int rr[len_chi], const int T_chi[s]) {
+int sample(const bool rr[len_chi]) {
   // Line 1
   int t = 0;
-  for (int i = 0; i < len_chi; i++) {
+  for (int i = 1; i < len_chi; i++) {
     t += rr[i] << (i-1);
   }
   int e = 0;
@@ -40,12 +40,11 @@ int sample(const int rr[len_chi], const int T_chi[s]) {
 void sample_matrix(
   const size_t n_1,
   const size_t n_2,
-  const int rr[n_1 * n_2][len_chi],
-  const int T_chi[s],
+  const bool rr[n_1 * n_2][len_chi],
   int E[n_1][n_2]) {
   for (int i = 0; i < n_1; i++) {
     for (int j = 0; j < n_2; j++) {
-      E[i][j] = sample(rr[i * n_2 + j], T_chi);
+      E[i][j] = sample(rr[i * n_2 + j]);
     }
   }
 }
