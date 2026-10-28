@@ -11,6 +11,8 @@ add_executable(frodokem main.c
         fips202.c
         matrix_generation.c
         matrix_generation.h
+        frodo_pke.c
+        frodo_pke.h
         params.h
 )
 
