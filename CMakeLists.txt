@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD 23)
 add_executable(frodokem main.c
         matrix_encoding.c
         matrix_packing.c
+        fips202.c
         params.h
 )
 
