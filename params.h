@@ -2,6 +2,8 @@
 #define FRODOKEM_PARAS_H
 #include <stddef.h>
 
+constexpr int len_chi = 12;
+constexpr int s = 42;
 constexpr int D = 16;
 constexpr int q = 1 << D; // A power-of-two integer modulus with exponent D <= 16.
 constexpr int n = 4;      // Integer matrix dimension, n ≡ 0 (mod 8).
