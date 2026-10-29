@@ -3,6 +3,7 @@
 
 void matrix_add(int m, int n, int A[m][n], int B[m][n], int O[m][n]);
 void matrix_mult(int m, int n, int o, int A[m][n], int B[n][o], int O[m][o]);
+void matrix_scale(int m, int n, int lambda, int A[m][n], int O[m][n]);
 void transpose(int m, int n, int A[m][n], int O[n][m]);
 
 #endif //FRODOKEM_LINALG_H

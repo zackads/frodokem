@@ -15,6 +15,13 @@ typedef struct {
   sk_t sk;
 } key_pair;
 
+typedef struct {
+  int C_1[mbar][n];
+  int C_2[mbar][nbar];
+} ciphertext;
+
 key_pair key_gen();
+ciphertext enc(bool mu[len_mu], pk_t pk);
+void dec(ciphertext c, sk_t sk, bool mu_prime[len_mu]);
 
 #endif //FRODOKEM_FRODO_PKE_H

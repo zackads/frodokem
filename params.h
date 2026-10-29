@@ -13,6 +13,7 @@ constexpr int mbar = 8;   // Integer matrix dimension.
 constexpr int nbar = 8;   // Integer matrix dimension, the number of samples.
 constexpr int B = 2;      // B <= D, the number of bits encoded in each matrix entry.
 constexpr int ell = B * mbar * nbar; // The length of bit strings that are encoded as mbar-by-nbar matrices.
+constexpr int len_mu = ell;
 constexpr size_t len_seed_A = 128;
 constexpr size_t len_seed_SE = 128;
 

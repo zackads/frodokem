@@ -36,3 +36,11 @@ void transpose(const int m, const int n, int A[m][n], int O[n][m]) {
     }
   }
 }
+
+void matrix_scale(const int m, const int n, const int lambda, int A[m][n], int O[m][n]) {
+  for (int i = 0; i < m; i++) {
+    for (int j = 0; j < n; j++) {
+      O[i][j] = mod_q(lambda * A[i][j]);
+    }
+  }
+}

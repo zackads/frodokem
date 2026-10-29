@@ -1,4 +1,5 @@
 #include <criterion/criterion.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "../frodo_pke.h"
@@ -48,4 +49,19 @@ Test(key_gen, seeds_are_random) {
   kp2 = key_gen();
   cr_assert_neq(memcmp(kp.pk.seed_A, kp2.pk.seed_A, sizeof kp.pk.seed_A), 0, "seed_A repeated across calls");
   cr_assert_neq(memcmp(kp.sk, kp2.sk, sizeof kp.sk), 0, "S^T repeated across calls");
+}
+
+// --- enc / dec --------------------------------------------------------------
+
+static ciphertext ct;
+
+Test(enc_dec, decryption_recovers_message) {
+  kp = key_gen();
+  for (int trial = 0; trial < 4; trial++) {
+    bool mu[len_mu], mu_prime[len_mu];
+    for (int i = 0; i < len_mu; i++) mu[i] = arc4random_uniform(2);
+    ct = enc(mu, kp.pk);
+    dec(ct, kp.sk, mu_prime);
+    cr_assert_eq(memcmp(mu, mu_prime, sizeof mu), 0, "trial %d: dec(enc(mu)) != mu", trial);
+  }
 }

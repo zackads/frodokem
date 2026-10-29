@@ -43,6 +43,7 @@ add_test(NAME matrix_packing COMMAND test_matrix_packing --timeout 10)
 
 add_executable(test_frodo_pke tests/test_frodo_pke.c
         frodo_pke.c
+        matrix_encoding.c
         matrix_generation.c
         sampling.c
         fips202.c

@@ -7,6 +7,7 @@
 
 #include "fips202.h"
 #include "linalg.h"
+#include "matrix_encoding.h"
 #include "params.h"
 #include "sampling.h"
 #include "utils.h"
@@ -62,4 +63,66 @@ key_pair key_gen() {
   memcpy(kp.pk.B, B, sizeof B);
   memcpy(kp.sk, ST, sizeof ST);
   return kp;
+}
+
+ciphertext enc(bool mu[len_mu], pk_t pk) {
+  // 1. Generate A <-- Frodo.Gen(seed_A)
+  int A[n][n];
+  gen_shake128(pk.seed_A, A);
+
+  // 2. Choose a uniformly random seed
+  uint8_t seed_SE_bytes[len_seed_SE / 8];
+  arc4random_buf(seed_SE_bytes, sizeof seed_SE_bytes);
+  bool seed_SE[len_seed_SE];
+  bytes_to_bits(len_seed_SE, seed_SE_bytes, seed_SE);
+
+  // 3. Generate pseudorandom bit string
+  constexpr size_t n_samples = 2 * mbar * n + mbar * nbar;
+  bool rr[n_samples][len_chi];
+  shake128_bits(8, 0x96, len_seed_SE, seed_SE, n_samples * len_chi, &rr[0][0]);
+
+  // 4. Sample error matrix S'
+  int S_prime[mbar][n];
+  sample_matrix(mbar, n, rr, S_prime);
+
+  // 5. Sample error matrix E'
+  int E_prime[mbar][n];
+  sample_matrix(mbar, n, rr + mbar * n, E_prime);
+
+  // 6. Sample error matrix E''
+  int E_double_prime[mbar][nbar];
+  sample_matrix(mbar, nbar, rr + 2 * mbar * n, E_double_prime);
+
+  ciphertext ct;
+
+  // C_1 = B' = S'A + E'
+  int B_prime[mbar][n];
+  matrix_mult(mbar, n, n, S_prime, A, B_prime);
+  matrix_add(mbar, n, B_prime, E_prime, ct.C_1);
+
+  // V = S'B + E''
+  int V[mbar][nbar];
+  matrix_mult(mbar, n, nbar, S_prime, pk.B, V);
+  matrix_add(mbar, nbar, V, E_double_prime, V);
+
+  // C_2 = V + Frodo.Encode(mu)
+  encode(mu, ct.C_2);
+  matrix_add(mbar, nbar, ct.C_2, V, ct.C_2);
+
+  return ct;
+}
+
+void dec(ciphertext c, sk_t sk, bool mu_prime[len_mu]) {
+  // sk = S^T, so we transpose to get S
+  int S[n][nbar];
+  transpose(nbar, n, sk, S);
+
+  int neg_C_1_S[mbar][nbar];
+  matrix_mult(mbar, n, nbar, c.C_1, S, neg_C_1_S);
+  matrix_scale(mbar, nbar, -1, neg_C_1_S, neg_C_1_S);
+
+  int M[mbar][nbar];
+  matrix_add(mbar, nbar, c.C_2, neg_C_1_S, M);
+
+  decode(M, mu_prime);
 }
