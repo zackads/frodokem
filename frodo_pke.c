@@ -34,18 +34,8 @@ key_pair key_gen() {
   bytes_to_bits(len_seed_SE, seed_SE_bytes, seed_SE);
 
   // Generate pseudorandom bit string (r^(0), ..., r^(2n·nbar - 1)) <- SHAKE(0x5F || seed_SE, 2n·nbar·len_chi)
-  bool salt[8 + len_seed_SE];
-  for (int i = 0; i < 8; i++) salt[i] = (0x5F >> i) & 1;
-  for (int i = 8; i < 8 + len_seed_SE; i++) salt[i] = seed_SE[i - 8];
-
-  uint8_t in[(8 + len_seed_SE + 7) / 8];
-  bits_to_bytes(8 + len_seed_SE, salt, in);
-
-  uint8_t out[(2 * n * nbar * len_chi) / 8];
-  shake128(out, sizeof out, in, sizeof in);
-
   bool rr[2 * n * nbar][len_chi];
-  bytes_to_bits(2 * n * nbar * len_chi, out, rr[0]);
+  shake128_bits(8, 0x5F, len_seed_SE, seed_SE, 2 * n * nbar * len_chi, rr[0]);
 
   // Sample error matrix S^T <- Frodo.SampleMatrix((r^(0), ..., r^(n·nbar - 1)), nbar, n, T_chi)
   const bool (*rr_ST)[len_chi] = &rr[0];

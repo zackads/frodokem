@@ -2,7 +2,6 @@
 
 #include <stdint.h>
 
-#include "fips202.h"
 #include "params.h"
 #include "utils.h"
 
@@ -22,23 +21,9 @@
  */
 void gen_shake128(const bool seed_A[len_seed_A], int A[n][n]) {
   for (uint16_t i = 0; i < n; i++) {
-    bool bb[16 + len_seed_A];
-
-    // Write i to the first 16 bits of bb
-    for (int j = 0; j < 16; j++) bb[j] = i >> j & 1;
-
-    // Write seed_A to the last len_seed_A bits of bb
-    for (int j = 16; j < 16 + len_seed_A; j++) bb[j] = seed_A[j - 16];
-
-    // Convert bb from a one-uint8_t-per-bit array to a packed byte representation, what shake128 expects
-    uint8_t in[(16 + len_seed_A + 7) / 8];
-    bits_to_bytes(16 + len_seed_A, bb, in);
-
-    // Generate a pseudorandom matrix row
-    uint8_t out[2 * n]; // 16n bits of output = 2n bytes
-    shake128(out, sizeof out, in, sizeof in);
+    // Generate a pseudorandom matrix row: SHAKE128(<i>_16 || seed_A, 16n)
     bool c[16 * n];
-    bytes_to_bits(16 * n, out, c);
+    shake128_bits(16, i, len_seed_A, seed_A, 16 * n, c);
 
     // Each c_ij is a 16-bit little-endian integer
     for (int j = 0; j < n; j++) {
