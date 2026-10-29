@@ -18,7 +18,7 @@
  *
  * Writes output to buffer @param K.
  */
-void encode(const int kk[ell], int K[mbar][nbar]) {
+void encode(const bool kk[ell], int K[mbar][nbar]) {
   for (int i = 0; i < mbar; i++) {
     for (int j = 0; j < nbar; j++) {
       int k = 0;
@@ -39,9 +39,9 @@ void encode(const int kk[ell], int K[mbar][nbar]) {
  * q/2^B and rounded.  This amounts to rounding the B most significant
  * bits of each entry.
  *
- * Writes output to buffer @param kk.
+ * Writes output to buffer @param kk .
  */
-void decode(const int K[mbar][nbar], int kk[ell]) {
+void decode(const int K[mbar][nbar], bool kk[ell]) {
   for (int i = 0; i < mbar; i++) {
     for (int j = 0; j < nbar; j++) {
       const int k = ((K[i][j] << B) + q / 2) / q % (1 << B);

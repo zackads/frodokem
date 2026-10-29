@@ -5,7 +5,7 @@
 // --- encode: known values ---------------------------------------------------
 
 Test(encode, all_zero_bits_give_zero_matrix) {
-  int kk[ell] = {0};
+  bool kk[ell] = {0};
   int K[mbar][nbar];
   for (int i = 0; i < mbar; i++)
     for (int j = 0; j < nbar; j++)
@@ -17,7 +17,7 @@ Test(encode, all_zero_bits_give_zero_matrix) {
 }
 
 Test(encode, all_one_bits_give_max_entry) {
-  int kk[ell];
+  bool kk[ell];
   for (int p = 0; p < ell; p++) kk[p] = 1;
   int K[mbar][nbar] = {0};
   encode(kk, K);
@@ -29,7 +29,7 @@ Test(encode, all_one_bits_give_max_entry) {
 
 Test(encode, single_bit_lands_in_correct_entry_and_weight) {
   for (int p = 0; p < ell; p++) {
-    int kk[ell] = {0};
+    bool kk[ell] = {0};
     kk[p] = 1;
     int K[mbar][nbar] = {0};
     encode(kk, K);
@@ -47,7 +47,8 @@ Test(encode, single_bit_lands_in_correct_entry_and_weight) {
 
 Test(encode, entries_are_in_range) {
   for (int k = 0; k < (1 << B); k++) {
-    int kk[ell], K[mbar][nbar] = {0};
+    bool kk[ell];
+    int K[mbar][nbar] = {0};
     for (int p = 0; p < ell; p++) kk[p] = (k >> (p % B)) & 1; // every entry is k
     encode(kk, K);
     for (int i = 0; i < mbar; i++)
@@ -61,7 +62,8 @@ Test(encode, entries_are_in_range) {
 
 Test(decode, exact_multiples_decode_to_entry_value) {
   for (int k = 0; k < (1 << B); k++) {
-    int K[mbar][nbar], expected[ell], out[ell] = {0};
+    int K[mbar][nbar];
+    bool expected[ell], out[ell] = {0};
     for (int i = 0; i < mbar; i++) {
       for (int j = 0; j < nbar; j++) {
         K[i][j] = k << (D - B);
@@ -92,7 +94,8 @@ Test(decode, rounds_to_nearest_with_wraparound) {
       int value = ((k << (D - B)) + cases[c].offset + (1 << D)) % (1 << D);
       int want = (k + cases[c].delta) % (1 << B);
 
-      int K[mbar][nbar] = {0}, expected[ell], out[ell] = {0};
+      int K[mbar][nbar] = {0};
+      bool expected[ell], out[ell] = {0};
       K[0][0] = value;
       for (int p = 0; p < ell; p++) expected[p] = p < B ? (want >> p) & 1 : 0; // entry 0 only
       decode(K, out);
@@ -107,7 +110,8 @@ Test(decode, rounds_to_nearest_with_wraparound) {
 Test(decode, output_is_bits) {
   const int samples[] = {0, 1, 31, 32, 33, 12345, (1 << D) / 2, (1 << D) - 33, (1 << D) - 1};
   for (size_t s = 0; s < sizeof samples / sizeof samples[0]; s++) {
-    int K[mbar][nbar], out[ell];
+    int K[mbar][nbar];
+    bool out[ell];
     for (int i = 0; i < mbar; i++)
       for (int j = 0; j < nbar; j++)
         K[i][j] = samples[s];
@@ -122,7 +126,8 @@ Test(decode, output_is_bits) {
 
 Test(roundtrip, fixed_patterns) {
   {
-    int kk[ell], K[mbar][nbar] = {0}, out[ell] = {0};
+    bool kk[ell], out[ell] = {0};
+    int K[mbar][nbar] = {0};
     for (int p = 0; p < ell; p++) kk[p] = 0;
     encode(kk, K);
     decode(K, out);
@@ -130,7 +135,8 @@ Test(roundtrip, fixed_patterns) {
       cr_assert_eq(out[p], kk[p], "all zeros, bit %d: decoded %d, expected %d", p, out[p], kk[p]);
   }
   {
-    int kk[ell], K[mbar][nbar] = {0}, out[ell] = {0};
+    bool kk[ell], out[ell] = {0};
+    int K[mbar][nbar] = {0};
     for (int p = 0; p < ell; p++) kk[p] = 1;
     encode(kk, K);
     decode(K, out);
@@ -138,7 +144,8 @@ Test(roundtrip, fixed_patterns) {
       cr_assert_eq(out[p], kk[p], "all ones, bit %d: decoded %d, expected %d", p, out[p], kk[p]);
   }
   {
-    int kk[ell], K[mbar][nbar] = {0}, out[ell] = {0};
+    bool kk[ell], out[ell] = {0};
+    int K[mbar][nbar] = {0};
     for (int p = 0; p < ell; p++) kk[p] = p % 2;
     encode(kk, K);
     decode(K, out);
@@ -147,7 +154,8 @@ Test(roundtrip, fixed_patterns) {
                    kk[p]);
   }
   {
-    int kk[ell], K[mbar][nbar] = {0}, out[ell] = {0};
+    bool kk[ell], out[ell] = {0};
+    int K[mbar][nbar] = {0};
     for (int p = 0; p < ell; p++) kk[p] = (p * 7 + 3) % 5 < 2; // irregular pattern
     encode(kk, K);
     decode(K, out);
@@ -158,7 +166,8 @@ Test(roundtrip, fixed_patterns) {
 
 Test(roundtrip, every_single_bit) {
   for (int b = 0; b < ell; b++) {
-    int kk[ell] = {0}, K[mbar][nbar] = {0}, out[ell] = {0};
+    bool kk[ell] = {0}, out[ell] = {0};
+    int K[mbar][nbar] = {0};
     kk[b] = 1;
     encode(kk, K);
     decode(K, out);
@@ -171,7 +180,8 @@ Test(roundtrip, every_single_bit) {
 // Every B-bit value in every entry: 2^B cases, so this is exhaustive per entry.
 Test(roundtrip, every_entry_value) {
   for (int k = 0; k < (1 << B); k++) {
-    int kk[ell], K[mbar][nbar] = {0}, out[ell] = {0};
+    bool kk[ell], out[ell] = {0};
+    int K[mbar][nbar] = {0};
     for (int p = 0; p < ell; p++) kk[p] = (k >> (p % B)) & 1; // every entry is k
     encode(kk, K);
     decode(K, out);

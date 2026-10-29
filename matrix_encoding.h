@@ -7,7 +7,7 @@
 
 #include "params.h"
 
-void encode(const int kk[ell], int K[mbar][nbar]);
-void decode(const int K[mbar][nbar], int kk[ell]);
+void encode(const bool kk[ell], int K[mbar][nbar]);
+void decode(const int K[mbar][nbar], bool kk[ell]);
 
 #endif
