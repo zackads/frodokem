@@ -4,8 +4,8 @@
 #include "params.h"
 
 typedef struct {
-  bool fst[len_seed_A];
-  int snd[n][nbar];
+  bool seed_A[len_seed_A];
+  int B[n][nbar];
 } pk_t;
 
 typedef int sk_t[nbar][n];

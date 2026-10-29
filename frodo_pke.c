@@ -68,8 +68,8 @@ key_pair key_gen() {
 
   // Return public key pk <- (seed_A, B) and secret key sk <- S^T
   key_pair kp;
-  memcpy(kp.pk.fst, seed_A, sizeof seed_A);
-  memcpy(kp.pk.snd, B, sizeof B);
+  memcpy(kp.pk.seed_A, seed_A, sizeof seed_A);
+  memcpy(kp.pk.B, B, sizeof B);
   memcpy(kp.sk, ST, sizeof ST);
   return kp;
 }
