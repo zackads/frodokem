@@ -16,6 +16,15 @@ constexpr int ell = B * mbar * nbar; // The length of bit strings that are encod
 constexpr int len_mu = ell;
 constexpr size_t len_seed_A = 128;
 constexpr size_t len_seed_SE = 128;
+constexpr size_t len_s = 128;
+constexpr size_t len_pkh = 128;
+constexpr size_t len_z = 128;
+constexpr size_t len_b = D * n * nbar;
+constexpr size_t len_ss = 128;
+constexpr size_t len_pk = len_seed_A + len_b;
+constexpr size_t len_k = 128;
+constexpr size_t len_c1 = D * mbar * n;
+constexpr size_t len_c2 = D * mbar * nbar;
 
 // The distribution table T_chi = (T_chi(0), ..., T_chi(s)) for chi_Frodo-640, derived from Table 3's probabilities
 // (in multiples of 2^-16) chi(0..12) = 9288, 8720, 7216, 5264, 3384, 1918, 958, 422, 164, 56, 17, 4, 1 via

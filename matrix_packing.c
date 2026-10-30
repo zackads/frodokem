@@ -12,7 +12,7 @@
  *
  * Writes output to buffer @param bb.
  */
-void pack(const size_t n_1, const size_t n_2, int C[n_1][n_2], int bb[D * n_1 * n_2]) {
+void pack(const size_t n_1, const size_t n_2, int C[n_1][n_2], bool bb[D * n_1 * n_2]) {
   for (int i = 0; i < n_1; i++) {
     for (int j = 0; j < n_2; j++) {
       for (int l = 0; l < D; l++) {
@@ -25,7 +25,7 @@ void pack(const size_t n_1, const size_t n_2, int C[n_1][n_2], int bb[D * n_1 * 
 /**
  * The inverse of pack.
  */
-void unpack(const size_t n_1, const size_t n_2, const int bb[D * n_1 * n_2], int C[n_1][n_2]) {
+void unpack(const size_t n_1, const size_t n_2, const bool bb[D * n_1 * n_2], int C[n_1][n_2]) {
   for (int i = 0; i < n_1; i++) {
     for (int j = 0; j < n_2; j++) {
       C[i][j] = 0;

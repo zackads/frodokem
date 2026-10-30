@@ -20,7 +20,7 @@ typedef struct {
   int C_2[mbar][nbar];
 } ciphertext;
 
-key_pair key_gen();
+key_pair gen();
 ciphertext enc(bool mu[len_mu], pk_t pk);
 void dec(ciphertext c, sk_t sk, bool mu_prime[len_mu]);
 

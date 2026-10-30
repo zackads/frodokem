@@ -17,7 +17,7 @@
  *
  * @return Key pair (pk, sk) ∈ ({0,1}^len_seed_A × Z_q^{n×nbar}) × Z_q^{nbar×n}.
  */
-key_pair key_gen() {
+key_pair gen() {
   // Choose a uniformly random seed_A
   uint8_t seed_A_bytes[len_seed_A / 8];
   arc4random_buf(seed_A_bytes, sizeof seed_A_bytes);

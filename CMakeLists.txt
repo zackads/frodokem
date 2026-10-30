@@ -18,6 +18,8 @@ add_executable(frodokem main.c
         utils.h
         linalg.c
         linalg.h
+        frodo_kem.c
+        frodo_kem.h
 )
 
 # Tests (Criterion: brew install criterion)

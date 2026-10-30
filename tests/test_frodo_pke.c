@@ -18,14 +18,14 @@ static int centre(const int x) {
 // --- key_gen ----------------------------------------------------------------
 
 Test(key_gen, public_key_entries_are_in_Z_q) {
-  kp = key_gen();
+  kp = gen();
   for (int i = 0; i < n; i++)
     for (int j = 0; j < nbar; j++)
       cr_assert(0 <= kp.pk.B[i][j] && kp.pk.B[i][j] < q, "B[%d][%d] = %d", i, j, kp.pk.B[i][j]);
 }
 
 Test(key_gen, secret_key_entries_are_in_support_of_chi) {
-  kp = key_gen();
+  kp = gen();
   for (int i = 0; i < nbar; i++)
     for (int j = 0; j < n; j++)
       cr_assert(-s <= kp.sk[i][j] && kp.sk[i][j] <= s, "S^T[%d][%d] = %d", i, j, kp.sk[i][j]);
@@ -33,7 +33,7 @@ Test(key_gen, secret_key_entries_are_in_support_of_chi) {
 
 // B - AS = E must be a small error matrix, with A regenerated from seed_A.
 Test(key_gen, public_key_is_an_LWE_sample) {
-  kp = key_gen();
+  kp = gen();
   gen_shake128(kp.pk.seed_A, A);
   transpose(nbar, n, kp.sk, S);
   matrix_mult(n, n, nbar, A, S, AS);
@@ -45,8 +45,8 @@ Test(key_gen, public_key_is_an_LWE_sample) {
 }
 
 Test(key_gen, seeds_are_random) {
-  kp = key_gen();
-  kp2 = key_gen();
+  kp = gen();
+  kp2 = gen();
   cr_assert_neq(memcmp(kp.pk.seed_A, kp2.pk.seed_A, sizeof kp.pk.seed_A), 0, "seed_A repeated across calls");
   cr_assert_neq(memcmp(kp.sk, kp2.sk, sizeof kp.sk), 0, "S^T repeated across calls");
 }
@@ -56,7 +56,7 @@ Test(key_gen, seeds_are_random) {
 static ciphertext ct;
 
 Test(enc_dec, decryption_recovers_message) {
-  kp = key_gen();
+  kp = gen();
   for (int trial = 0; trial < 4; trial++) {
     bool mu[len_mu], mu_prime[len_mu];
     for (int i = 0; i < len_mu; i++) mu[i] = arc4random_uniform(2);
