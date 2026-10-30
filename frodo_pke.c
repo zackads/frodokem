@@ -35,8 +35,11 @@ key_pair key_gen() {
   bytes_to_bits(len_seed_SE, seed_SE_bytes, seed_SE);
 
   // Generate pseudorandom bit string (r^(0), ..., r^(2n·nbar - 1)) <- SHAKE(0x5F || seed_SE, 2n·nbar·len_chi)
+  bool in[8 + len_seed_SE];
+  bytes_to_bits(8, (const uint8_t[]){0x5F}, in);
+  memcpy(in + 8, seed_SE, sizeof seed_SE);
   bool rr[2 * n * nbar][len_chi];
-  shake128_bits(8, 0x5F, len_seed_SE, seed_SE, 2 * n * nbar * len_chi, rr[0]);
+  shake128_bits(8 + len_seed_SE, in, 2 * n * nbar * len_chi, rr[0]);
 
   // Sample error matrix S^T <- Frodo.SampleMatrix((r^(0), ..., r^(n·nbar - 1)), nbar, n, T_chi)
   const bool (*rr_ST)[len_chi] = &rr[0];
@@ -79,7 +82,7 @@ ciphertext enc(bool mu[len_mu], pk_t pk) {
   // 3. Generate pseudorandom bit string
   constexpr size_t n_samples = 2 * mbar * n + mbar * nbar;
   bool rr[n_samples][len_chi];
-  shake128_bits(8, 0x96, len_seed_SE, seed_SE, n_samples * len_chi, &rr[0][0]);
+  shake128_bits(len_seed_SE, seed_SE, n_samples * len_chi, &rr[0][0]);
 
   // 4. Sample error matrix S'
   int S_prime[mbar][n];

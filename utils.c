@@ -32,25 +32,17 @@ void bytes_to_bits(const size_t nbits, const uint8_t bytes[], bool bits[nbits]) 
 }
 
 /**
- * Compute SHAKE128(prefix || seed, out_len) on one-bool-per-bit strings.
+ * Compute SHAKE128(in, out_len) on one-bool-per-bit strings.
  *
- * @param prefix is written as a @param prefix_len -bit little-endian integer (prefix_len <= 32), followed by the
- * @param seed_len bits of @param seed .
- *
- * Output the @param out_len pseudorandom bits to @param out .
+ * Hash the @param in_len bits of @param in , and output the @param out_len pseudorandom bits to @param out .
  */
-void shake128_bits(const size_t prefix_len, const uint32_t prefix, const size_t seed_len, const bool seed[seed_len],
-                   const size_t out_len, bool out[out_len]) {
-  bool bb[prefix_len + seed_len];
-  for (size_t i = 0; i < prefix_len; i++) bb[i] = (prefix >> i) & 1;
-  for (size_t i = prefix_len; i < prefix_len + seed_len; i++) bb[i] = seed[i - prefix_len];
-
-  // Convert bb from a one-bool-per-bit array to a packed byte representation, what shake128 expects
-  uint8_t in[(prefix_len + seed_len + 7) / 8];
-  bits_to_bytes(prefix_len + seed_len, bb, in);
+void shake128_bits(const size_t in_len, const bool in[in_len], const size_t out_len, bool out[out_len]) {
+  // Convert in from a one-bool-per-bit array to a packed byte representation, what shake128 expects
+  uint8_t bytes_in[(in_len + 7) / 8];
+  bits_to_bytes(in_len, in, bytes_in);
 
   uint8_t bytes_out[(out_len + 7) / 8];
-  shake128(bytes_out, sizeof bytes_out, in, sizeof in);
+  shake128(bytes_out, sizeof bytes_out, bytes_in, sizeof bytes_in);
 
   bytes_to_bits(out_len, bytes_out, out);
 }

@@ -1,6 +1,7 @@
 #include "matrix_generation.h"
 
 #include <stdint.h>
+#include <string.h>
 
 #include "params.h"
 #include "utils.h"
@@ -22,8 +23,11 @@
 void gen_shake128(const bool seed_A[len_seed_A], int A[n][n]) {
   for (uint16_t i = 0; i < n; i++) {
     // Generate a pseudorandom matrix row: SHAKE128(<i>_16 || seed_A, 16n)
+    bool in[16 + len_seed_A];
+    bytes_to_bits(16, (const uint8_t[]){i & 0xFF, i >> 8}, in);
+    memcpy(in + 16, seed_A, len_seed_A * sizeof(bool));
     bool c[16 * n];
-    shake128_bits(16, i, len_seed_A, seed_A, 16 * n, c);
+    shake128_bits(16 + len_seed_A, in, 16 * n, c);
 
     // Each c_ij is a 16-bit little-endian integer
     for (int j = 0; j < n; j++) {
